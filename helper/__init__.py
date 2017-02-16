@@ -93,7 +93,7 @@ def showImage(image):
 
     # create trackbars for color change
     cv2.createTrackbar('Cluster',wname,3,20,onClusterChange)
-    cv2.createTrackbar('KCount',wname,1,10,onKmeanChange)
+    cv2.createTrackbar('KCount',wname,5,10,onKmeanChange)
     global update
     update = True
     run = True

@@ -29,7 +29,7 @@ def process(image):
 
 for hoa_index, item in enumerate(listdir("./Hoa")[1:]):
     parent_path = join("./Hoa", item)
-    name = item
+    name_hoa = item
     path_ok = join(parent_path, "Ok3")
     if not exists(path_ok):
         makedirs(path_ok)
@@ -39,7 +39,7 @@ for hoa_index, item in enumerate(listdir("./Hoa")[1:]):
             continue
         path_in = join(parent_path, item)
         index += 1
-        name = "1{}{:03}.jpg".format(name_list[name],index)
+        name = "1{}{:03}.jpg".format(name_list[name_hoa],index)
         path_out = join(path_ok, name)
         # if not os.path.exists(path_out):
             # os.makedirs(path_out)

@@ -4,7 +4,14 @@ from os.path import isfile, join, exists
 import numpy as np
 from helper import kmeans, resize, showImage
 
-name_list = ['cos', 'ant', 'coc', 'lot', 'str']
+# name_list = ['cos', 'ant', 'coc', 'lot', 'str']
+name_list = {
+    "Hoa Canh Buom": 'cos',
+    "Hoa Hong Mon": "ant",
+    "Hoa Mao Ga": "coc",
+    "Hoa Sen": "lot",
+    "Hoa Thien Dieu": "str"
+}
 
 def doing():
     pass
@@ -20,7 +27,6 @@ def process(image):
     cv2.imshow("Image", image)
     key = cv2.waitKey(0)
 
-
 for hoa_index, item in enumerate(listdir("./Hoa")[1:]):
     parent_path = join("./Hoa", item)
     name = item
@@ -33,7 +39,7 @@ for hoa_index, item in enumerate(listdir("./Hoa")[1:]):
             continue
         path_in = join(parent_path, item)
         index += 1
-        name = "1{}{:03}.jpg".format(name_list[hoa_index],index)
+        name = "1{}{:03}.jpg".format(name_list[name],index)
         path_out = join(path_ok, name)
         # if not os.path.exists(path_out):
             # os.makedirs(path_out)

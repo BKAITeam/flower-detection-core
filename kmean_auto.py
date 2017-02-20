@@ -15,7 +15,9 @@ name_list = {
 for hoa_index, item in enumerate(listdir("./Hoa")):
     parent_path = join("./Hoa", item)
     name_hoa = item
-    path_ok = join(parent_path, "Ok4")
+    if item != "Hoa Thien Dieu":
+        continue
+    path_ok = join(parent_path, "Ok2")
     if not exists(path_ok):
         makedirs(path_ok)
     index=0
@@ -32,19 +34,12 @@ for hoa_index, item in enumerate(listdir("./Hoa")):
         try:
             image = cv2.imread(path_in)
             image = resize(image)
-            label,center, image = kmeans(image,2,5)
+            label,center, image = kmeans(image,3,5)
             image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            ret,image = cv2.threshold(image,127,255,cv2.THRESH_BINARY)
+            ret,image = cv2.threshold(image,0,255,cv2.THRESH_OTSU)
             # image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,2)
-            image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,5,7)
+            # image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,5,7)
+            print path_out
             cv2.imwrite(path_out, image)
-            # images = [image, th1, th2, th3]
-            # print images
-            # cv2.imshow("OK", th1)
         except Exception, err:
             print "Err", err, input
-
-# image = cv2.imread("/Users/marsch/Projects/IPAI/FlowerDetect/tools/Hoa/Hoa Canh Buom/Screen Shot 2017-01-10 at 20.21.32.png")
-# image = kmeans.kmean(image,2)
-# image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-# cv2.imgshow("Image", image)

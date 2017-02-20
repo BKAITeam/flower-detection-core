@@ -28,9 +28,11 @@ def process(image):
     key = cv2.waitKey(0)
 
 for hoa_index, item in enumerate(listdir("./Hoa")):
-    parent_path = join("./Hoa", item, "Loc_OK")
+    parent_path = join("./Hoa", item, "Origin")
+    if item != "Hoa Thien Dieu":
+        continue
     name_hoa = item
-    path_ok = join("./Hoa", item, "Loc_Binary")
+    path_ok = join("./Hoa", item, "Binary")
     # print path_ok
     if not exists(path_ok):
         makedirs(path_ok)
@@ -40,23 +42,23 @@ for hoa_index, item in enumerate(listdir("./Hoa")):
             continue
         path_in = join(parent_path, item)
         index += 1
-        # name = "1{}{:03}.png".format(name_list[name_hoa],index)
-        name = "1" + item[1:]
+        # name = "1{}{:03}.jpg".format(name_list[name_hoa],index)
+        name = item
         path_out = join(path_ok, name)
         print "Load:", path_in
         try:
             image = cv2.imread(path_in)
             # Begin processing
             # process(image)
-            # save = showImage(image)
+            save = showImage(image)
             # image = resize(image)
             # label,center,image = kmeans(image,2)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            ret,image = cv2.threshold(image,0,255,cv2.THRESH_OTSU)
+            # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            # ret,image = cv2.threshold(image,127,255,cv2.THRESH_BINARY)
             # image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,2)
             # image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,5,7)
             # End processing
             print "Save:", path_out
-            cv2.imwrite(path_out, image)
+            cv2.imwrite(path_out, save)
         except Exception, err:
             print "Err", err, input

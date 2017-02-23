@@ -79,13 +79,27 @@ def joinMutipleImage(*images):
 
 def extraction(image,n, count):
     result = []
-    label, center, image = kmeans(image,n, count)
+    label, center, kmean_image = kmeans(image,n, count)
+    # print "KMEAN IMAGE",type(image_kmean),"IMAGE",type(image)
+    # new_image = image.tolist()
+    # print "NEW IMAGE",type(new_image)
+
+    # new_image = map(lambda row: map(lambda point: point if point != center[0].tolist() else [0,0,0], row), new_image)
+    # print "RESULT IMAGE",type(result)
+    # new_image = np.array(new_image, dtype=np.uint8)
+    # result.append(new_image)
     for i in xrange(n):
         new_image = image.tolist()
-        new_image = map(lambda row: map(lambda point: point if point == center[i].tolist() else [0,0,0], row), new_image)
+        kmean_image_list = kmean_image.tolist()
+        # new_image = map(lambda row: map(lambda point: point if point != center[i].tolist() else [0,0,0], row), kmean_image_list)
+        for index_row,row in enumerate(kmean_image_list):
+            for index_column,point in enumerate(row):
+                if point != center[i].tolist():
+                    new_image[index_row][index_column]=[0,0,0]
+
         new_image = np.array(new_image, dtype=np.uint8)
-        new_image = cv2.cvtColor(new_image, cv2.COLOR_BGR2GRAY)
-        ret,new_image = cv2.threshold(new_image,0,255,cv2.THRESH_OTSU)
+        # new_image = cv2.cvtColor(new_image, cv2.COLOR_BGR2GRAY)
+        # ret,new_image = cv2.threshold(new_image,0,255,cv2.THRESH_OTSU)
         result.append(new_image)
     return result
 

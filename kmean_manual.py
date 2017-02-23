@@ -6,11 +6,13 @@ from helper import kmeans, resize, showImage
 
 # name_list = ['cos', 'ant', 'coc', 'lot', 'str']
 name_list = {
-    "Hoa Canh Buom": 'cos',
-    "Hoa Hong Mon": "ant",
-    "Hoa Mao Ga": "coc",
-    "Hoa Sen": "lot",
-    "Hoa Thien Dieu": "str"
+    "callalily": 'cal',
+    "daisy": "dai",
+    "hibiscus":"hib",
+    "hortensia":"hor",
+    "hortensia-violet":"hor",
+    "marigold":"mar",
+    "marigold-red":"mar"
 }
 
 def doing():
@@ -26,37 +28,39 @@ def process(image):
 
     cv2.imshow("Image", image)
     key = cv2.waitKey(0)
-
-for hoa_index, item in enumerate(listdir("./Hoa")):
-    parent_path = join("./Hoa", item, "Loc_OK")
-    name_hoa = item
-    path_ok = join("./Hoa", item, "Loc_Binary")
-    # print path_ok
-    if not exists(path_ok):
-        makedirs(path_ok)
-    index=0
-    for item in listdir(parent_path):
-        if not item.endswith(".png"):
-            continue
-        path_in = join(parent_path, item)
-        index += 1
-        # name = "1{}{:03}.png".format(name_list[name_hoa],index)
-        name = "1" + item[1:]
-        path_out = join(path_ok, name)
-        print "Load:", path_in
-        try:
-            image = cv2.imread(path_in)
-            # Begin processing
-            # process(image)
-            # save = showImage(image)
-            # image = resize(image)
-            # label,center,image = kmeans(image,2)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            ret,image = cv2.threshold(image,0,255,cv2.THRESH_OTSU)
-            # image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,2)
-            # image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,5,7)
-            # End processing
-            print "Save:", path_out
-            cv2.imwrite(path_out, image)
-        except Exception, err:
-            print "Err", err, input
+source_flowers_path = "../Build/version-1/"
+output_flowers_path = "../Build/version-2/"
+for hoa_index, item in enumerate(listdir(source_flowers_path)):
+    if item in name_list:
+        parent_path = join(source_flowers_path, item)
+        name_hoa = item
+        output_path = join(output_flowers_path, item)
+        # print output_path
+        if not exists(output_path):
+            makedirs(output_path)
+        index=0
+        for item in listdir(parent_path):
+            if not item.endswith(".png"):
+                continue
+            path_in = join(parent_path, item)
+            index += 1
+            # name = "1{}{:03}.png".format(name_list[name_hoa],index)
+            name = "1" + item[1:]
+            output_each_flower_path = join(output_path, name)
+            print "Load:", path_in
+            try:
+                image = cv2.imread(path_in)
+                # Begin processing
+                # process(image)
+                # save = showImage(image)
+                # image = resize(image)
+                # label,center,image = kmeans(image,2)
+                image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                ret,image = cv2.threshold(image,0,255,cv2.THRESH_OTSU)
+                # image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,2)
+                # image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,5,7)
+                # End processing
+                print "Save:", output_each_flower_path
+                cv2.imwrite(output_each_flower_path, image)
+            except Exception, err:
+                print "Err", err, input

@@ -1,5 +1,8 @@
 import cv2
 import numpy as np
+import os
+from setting import NAME_LIST, OUT_PATH
+
 
 def resize(image):
     r = 100.0 / image.shape[0]
@@ -10,11 +13,24 @@ def resize(image):
 
 def kmeans(img,k, loop):
     # img = cv2.imread('1ant009.jpg')
+    img = cv2.cvtColor(img,cv2.COLOR_RGB2Lab)
     Z = img.reshape((-1,3))
 
     # convert to np.float32
     Z = np.float32(Z)
+    # height, width , depth = img.shape
 
+    # # Merge a* with b*
+    # lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+    # l_channel, a_channel, b_channel = cv2.split(lab)
+
+    # Z1 = a_channel.reshape((height*width,1))
+    # Z2 = b_channel.reshape((height*width,1))
+
+    # Z = np.hstack((Z1, Z2))
+
+    # convert to np.float32
+    # Z = np.float32(Z)
     # define criteria, number of clusters(K) and apply kmeans()
     # criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, loop, 1.0)
     criteria = (cv2.TERM_CRITERIA_MAX_ITER, loop, 1.0)
@@ -26,7 +42,7 @@ def kmeans(img,k, loop):
     res2 = res.reshape((img.shape))
 
     # cv2.imwrite("ok3.jpg", res2)
-    return label,center,res2
+    return label, center, res2
 
 
 def onClusterChange(cluster):
@@ -127,11 +143,11 @@ def showImage(image):
     update = True
     run = True
     while(run):
-        if update:
-            images = extraction(image,num_of_cluster, loop_of_kmean)
-            show_image = joinMutipleImage(*images)
-            cv2.imshow("Image", show_image)
-            update = False
+        # if update:
+        images = extraction(image,num_of_cluster, loop_of_kmean)
+        show_image = joinMutipleImage(*images)
+        cv2.imshow("Image", show_image)
+        update = False
 
         key = cv2.waitKey(0)
         if key > ord('0') and key <= ord('9'):
@@ -142,3 +158,34 @@ def showImage(image):
 def huMonents(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     return cv2.HuMoments(cv2.moments(image))
+
+
+def list_item(input_path):
+    for item in os.listdir(input_path):
+        if item in NAME_LIST:
+            path = os.path.join(input_path, item)
+            for hoa_item in os.listdir(path):
+                if hoa_item.endswith('.png'):
+                    path_hoa = os.path.join(path, hoa_item)
+                    yield path_hoa
+
+
+def save_img(label, code, input, img):
+    flower_name = os.path.basename(os.path.dirname(input))
+    item_name = os.path.basename(input)
+    new_name = code + item_name[1:]
+    out_dir = os.path.join(OUT_PATH, label, flower_name)
+    out_path = os.path.join(OUT_PATH, label, flower_name, new_name)
+    print out_path
+    if not os.path.exists(out_dir):
+        os.makedirs(out_dir)
+    cv2.imwrite(out_path, img)
+
+def rename(dir_input,code,index):
+    # item_name = os.path.basename(dir_input)
+    dir_name = os.path.dirname(dir_input)
+    new_name = "0{}{:03}.png".format(code, index)
+    dir_name = os.path.join(dir_name,new_name)
+    print dir_name
+    os.rename(dir_input, dir_name)
+    # print item_name

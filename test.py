@@ -1,16 +1,16 @@
-from helper import kmeans, resize, showImage, huMonents
-import cv2
-import numpy as np
+import os
+from setting import NAME_LIST
 
 
-image = cv2.imread("0cos015.png")
-kernel = np.ones((5,5), np.uint8)
+def list_item(input_path):
+    for item in os.listdir(input_path):
+        if item in NAME_LIST:
+            path = os.path.join(input_path, item)
+            for hoa_item in os.listdir(path):
+                if hoa_item.endswith('.png'):
+                    path_hoa = os.path.join(path, hoa_item)
+                    yield path_hoa
 
-img_erosion = cv2.erode(image, kernel, iterations=1)
-img_dilation = cv2.dilate(image, kernel, iterations=1)
-
-cv2.imshow("Erosion", img_erosion)
-cv2.imshow("Dilasion", img_dilation)
-cv2.imshow("Original", image)
-cv2.waitKey(0)
-# showImage(image)
+gen = list_item()
+while(hasnext(list_item))
+print dir(list_item)

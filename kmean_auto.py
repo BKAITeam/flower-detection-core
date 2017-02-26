@@ -17,7 +17,7 @@ for hoa_index, item in enumerate(listdir("./Hoa")):
     name_hoa = item
     if item != "Hoa Thien Dieu":
         continue
-    path_ok = join(parent_path, "Ok2")
+    path_ok = join(parent_path, "TestColor")
     if not exists(path_ok):
         makedirs(path_ok)
     index=0
@@ -35,11 +35,12 @@ for hoa_index, item in enumerate(listdir("./Hoa")):
             image = cv2.imread(path_in)
             image = resize(image)
             label,center, image = kmeans(image,3,5)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            ret,image = cv2.threshold(image,0,255,cv2.THRESH_OTSU)
+            print center
+            # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            # ret,image = cv2.threshold(image,0,255,cv2.THRESH_OTSU)
             # image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,2)
             # image = cv2.adaptiveThreshold(image,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,5,7)
             print path_out
-            cv2.imwrite(path_out, image)
+            # cv2.imwrite(path_out, image)
         except Exception, err:
             print "Err", err, input

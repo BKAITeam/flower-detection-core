@@ -27,7 +27,7 @@ source_flowers_version_path = "./Hoa2"
 output_flowers_version_path = "../Build/version-4/"
 test_pic = "../test.jpg"
 
-INPUT_PATH = os.path.join(BASE_DIR, "Source")
+INPUT_PATH = os.path.join(BASE_DIR, "Build/Gray")
 OUT_PATH = os.path.join(BASE_DIR, "Build")
 TEST_OUT_PATH = os.path.join(BASE_DIR, "Test")
 TEST_IN_PATH = os.path.join(BASE_DIR, "Test")

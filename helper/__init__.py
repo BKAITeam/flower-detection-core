@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import os
 from setting import NAME_LIST, OUT_PATH
-
+import math
 
 def resize(image):
     r = 100.0 / image.shape[0]
@@ -158,6 +158,10 @@ def showImage(image):
 def huMonents(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     return cv2.HuMoments(cv2.moments(image))
+
+def logarit(hu):
+    log = map(lambda x: math.log(abs(x)), hu)
+    return log
 
 
 def list_item(input_path):

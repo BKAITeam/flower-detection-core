@@ -1,8 +1,10 @@
 import cv2
 import numpy as np
 import os
-from setting import NAME_LIST, OUT_PATH
+from setting import NAME_LIST, OUT_PATH, INPUT_PATH
 import math
+import time
+
 
 def resize(image):
     r = 100.0 / image.shape[0]
@@ -164,12 +166,12 @@ def logarit(hu):
     return log
 
 
-def list_item(input_path):
+def list_item(input_path=INPUT_PATH):
     for item in os.listdir(input_path):
         if item in NAME_LIST:
             path = os.path.join(input_path, item)
             for hoa_item in os.listdir(path):
-                if hoa_item.endswith('.png'):
+                if hoa_item.endswith('.png') or hoa_item.endswith('.jpg'):
                     path_hoa = os.path.join(path, hoa_item)
                     yield path_hoa
 
@@ -180,16 +182,24 @@ def save_img(label, code, input, img):
     new_name = code + item_name[1:]
     out_dir = os.path.join(OUT_PATH, label, flower_name)
     out_path = os.path.join(OUT_PATH, label, flower_name, new_name)
-    print out_path
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
     cv2.imwrite(out_path, img)
 
 def rename(dir_input,code,index):
     # item_name = os.path.basename(dir_input)
+    print(dir_input)
     dir_name = os.path.dirname(dir_input)
-    new_name = "0{}{:03}.png".format(code, index)
+    new_name = "2{}{:03}.png".format(code, index)
     dir_name = os.path.join(dir_name,new_name)
-    print dir_name
     os.rename(dir_input, dir_name)
     # print item_name
+
+
+def argmax(arr):
+    result = []
+    for row in arr:
+        for index, value in enumerate(row):
+            if value==1:
+                result.append(index)
+    return np.array(result)

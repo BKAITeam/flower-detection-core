@@ -2,4 +2,5 @@ Hoa/
 **/**/*.pyc
 Hoa_BackUp/
 Build/**/
+Build (copy)/**/
 Source/**/

@@ -163,7 +163,7 @@ def huMonents(image):
 
 def logarit(hu):
     log = map(lambda x: math.log(abs(x)), hu)
-    return log
+    return list(log)
 
 
 def list_item(input_path=INPUT_PATH):

@@ -2,5 +2,6 @@ Hoa/
 **/**/*.pyc
 Hoa_BackUp/
 Build/**/
+MNIST_data/**/
 Build (copy)/**/
 Source/**/

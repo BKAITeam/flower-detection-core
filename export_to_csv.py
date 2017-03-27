@@ -8,33 +8,40 @@ import numpy as np
 import os
 import pandas as pd
 
+m = 5
 
-def output_layer(n):
-    arr = np.zeros((13), dtype=np.float32)
+def output_layer(n, m):
+    arr = np.zeros((m), dtype=np.float32)
     arr[n] = 1.0
     return arr
 
 label = {
-    "Hoa Canh Buom": output_layer(0),
-    "Hoa Hong": output_layer(1),
-    "Hoa Hong Mon": output_layer(2),
-    "Hoa Huong Duong": output_layer(3),
-    "Hoa Ly": output_layer(4),
-    "Hoa Mao Ga": output_layer(5),
-    "Hoa Sen": output_layer(6),
-    "Hoa Thien Dieu": output_layer(7),
-    "Hoa Thuoc Duoc": output_layer(8),
-    "Hoa Trang": output_layer(9),
-    "Hoa But": output_layer(10),
-    "Hoa Cuc Trang": output_layer(11),
-    "Hoa Rum": output_layer(12),
+    "Hoa Canh Buom": output_layer(0, m),
+    # "Hoa Hong": output_layer(1),
+    # "Hoa Hong Mon": output_layer(2),
+    "Hoa Huong Duong": output_layer(1, m),
+    # "Hoa Ly": output_layer(4),
+    # "Hoa Mao Ga": output_layer(5),
+    # "Hoa Sen": output_layer(6),
+    "Hoa Thien Dieu": output_layer(2, m),
+    # "Hoa Thuoc Duoc": output_layer(8),
+    # "Hoa Trang": output_layer(9),
+    "Hoa But": output_layer(3, m),
+    # "Hoa Cuc Trang": output_layer(11),
+    "Hoa Rum": output_layer(4, m),
 }
 
+name = "data_{:02}_suffer".format(m)
 
-file_input = "./data_13_suffer/data_in.csv"
-file_output = "./data_13_suffer/data_out.csv"
-file_check = "./data_13_suffer/data_check.csv"
+folder_data = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", name)
 
+file_input = os.path.join(folder_data, "data_in.csv")
+file_output = os.path.join(folder_data, "data_out.csv")
+file_check = os.path.join(folder_data, "data_check.csv")
+
+
+if not os.path.exists(folder_data):
+    os.makedirs(folder_data)
 
 def export_data_to_train():
     check_data = []
@@ -58,18 +65,19 @@ def export_data_to_train():
     check_data = np.array(check_data)
     
     data_in = check_data[:,0:7]
-    data_out = check_data[:,7:20]
+    data_out = check_data[:,7:7+m]
 
+    # data_in = np.multiply(data_in, 1.0)
     df = pd.DataFrame(data_in)
-    df.to_csv(file_input)
+    df.to_csv(file_input, header=False, index=False)
 
     df = pd.DataFrame(data_out)
-    df.to_csv(file_output)
+    df.to_csv(file_output, header=False, index=False)
 
     df = pd.DataFrame(check_data)
-    df.to_csv(file_check)
+    df.to_csv(file_check, header=False, index=False)
 
-    input = pd.read_csv(file_input, usecols=range(1,8))
-    print(input)
+    # input = pd.read_csv(file_input, usecols=range(1,8))
+    # print(input)
 
 export_data_to_train()

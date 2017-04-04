@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/marsch/Projects/FlowerDetect-Core/backup/backup_15_train_/checkpoint.chk"
+all_model_checkpoint_paths: "/home/marsch/Projects/FlowerDetect-Core/backup/backup_15_train_/checkpoint.chk"

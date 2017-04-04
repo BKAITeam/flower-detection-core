@@ -1,7 +1,2 @@
-Hoa/
 **/**/*.pyc
-Hoa_BackUp/
-Build/**/**
-MNIST_data/**/**
-Build_BK/**/**
-Source/**/
+data/**/**

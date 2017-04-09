@@ -1,7 +1,6 @@
 import cv2
 from os import listdir, makedirs
-from os.path import isfile, join, exists
-import numpy as np
+from os.path import join, exists
 from helper import kmeans, resize
 
 # name_list = ['cos', 'ant', 'coc', 'lot', 'str']
@@ -20,13 +19,13 @@ for hoa_index, item in enumerate(listdir("./Hoa")):
     path_ok = join(parent_path, "TestColor")
     if not exists(path_ok):
         makedirs(path_ok)
-    index=0
+    index = 0
     for item in listdir(parent_path)[1:]:
         if not item.endswith(".png"):
             continue
         path_in = join(parent_path, item)
         index += 1
-        name = "0{}{:03}.png".format(name_list[name_hoa],index)
+        name = "0{}{:03}.png".format(name_list[name_hoa], index)
         path_out = join(path_ok, name)
         # if not os.path.exists(path_out):
             # os.makedirs(path_out)
@@ -34,7 +33,7 @@ for hoa_index, item in enumerate(listdir("./Hoa")):
         try:
             image = cv2.imread(path_in)
             image = resize(image)
-            label,center, image = kmeans(image,3,5)
+            label, center, image = kmeans(image, 3, 5)
             print center
             # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             # ret,image = cv2.threshold(image,0,255,cv2.THRESH_OTSU)
